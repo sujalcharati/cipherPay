@@ -1,101 +1,116 @@
-import Image from "next/image";
+"use client"
 
-export default function Home() {
+import { useState, useEffect } from "react"
+import { Search, Moon, Sun, ChevronRight, CuboidIcon as CubeIcon } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
+
+function App() {
+  const [darkMode, setDarkMode] = useState(true)
+  const [searchQuery, setSearchQuery] = useState("")
+
+  const blockchains = [
+    { name: "Ethereum", tag: "Popular", color: "bg-blue-500" },
+    { name: "Solana", tag: "Fast", color: "bg-purple-500" },
+    
+  ]
+
+  const filteredBlockchains = blockchains.filter((chain) =>
+    chain.name.toLowerCase().includes(searchQuery.toLowerCase()),
+  )
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode)
+    if (darkMode) {
+      document.documentElement.classList.remove("dark")
+    } else {
+      document.documentElement.classList.add("dark")
+    }
+  }
+
+  useEffect(() => {
+    if (darkMode && !document.documentElement.classList.contains("dark")) {
+      document.documentElement.classList.add("dark")
+    }
+  }, [darkMode])
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="bg-white dark:bg-violet-950 min-h-screen transition-colors duration-300">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Header */}
+        <header className="flex justify-between items-center mb-16">
+          <div className="flex items-center gap-2">
+            <CubeIcon className="h-8 w-8 text-violet-600 dark:text-violet-400" />
+            <span className="text-2xl font-bold bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent">
+              CipherPay
+            </span>
+          </div>
+          <Button variant="ghost" size="icon" onClick={toggleDarkMode} className="rounded-full">
+            {darkMode ? <Sun className="h-5 w-5 text-yellow-300" /> : <Moon className="h-5 w-5 text-violet-700" />}
+          </Button>
+        </header>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+        {/* Main Content */}
+        <main>
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
+              Connect to any blockchain
+            </h1>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              Choose your preferred network to begin your decentralized journey
+            </p>
+          </div>
+
+          {/* Search */}
+          <div className="relative mb-10 max-w-md mx-auto">
+            <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+            <Input
+              type="text"
+              placeholder="Search blockchains..."
+              className="pl-10 bg-gray-50 dark:bg-violet-900/50 border-gray-200 dark:border-violet-800"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          </div>
+
+          {/* Blockchain Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filteredBlockchains.map((blockchain) => (
+              <Button
+                key={blockchain.name}
+                variant="outline"
+                className="h-auto py-6 px-6 flex justify-between items-center group border-2 hover:border-violet-500 dark:hover:border-violet-400 transition-all duration-200 bg-white dark:bg-violet-900/30"
+              >
+                <div className="flex items-center gap-3 text-left">
+                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${blockchain.color}`}>
+                    <span className="text-white font-bold">{blockchain.name.charAt(0)}</span>
+                  </div>
+                  <div>
+                    <div className="font-semibold text-lg text-gray-900 dark:text-white">{blockchain.name}</div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400">{blockchain.tag}</div>
+                  </div>
+                </div>
+                <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-violet-500 dark:group-hover:text-violet-400 transform group-hover:translate-x-1 transition-transform" />
+              </Button>
+            ))}
+          </div>
+
+          {filteredBlockchains.length === 0 && (
+            <div className="text-center py-10 text-gray-500 dark:text-gray-400">
+              No blockchains found matching "{searchQuery}"
+            </div>
+          )}
+        </main>
+
+        {/* Footer */}
+        <footer className="mt-16 text-center text-sm text-gray-500 dark:text-gray-400">
+          <p>© 2025 CipherPay. All rights reserved.</p>
+        </footer>
+      </div>
     </div>
-  );
+  )
 }
+
+export default App
+
