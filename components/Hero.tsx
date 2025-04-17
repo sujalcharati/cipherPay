@@ -43,7 +43,11 @@ const Hero = () => {
 
           {/* Blockchain Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pl-64">
-            {filteredBlockchains.map((blockchain:any) => (
+            {filteredBlockchains.map((blockchain: {
+              name: string;
+              tag: string;
+              color: string;
+            }) => (
               <Button
                 key={blockchain.name}
                 variant="outline"
@@ -65,7 +69,7 @@ const Hero = () => {
 
           {filteredBlockchains.length === 0 && (
             <div className="text-center py-10 text-gray-500 dark:text-gray-400">
-              No blockchains found matching "{searchQuery}"
+              No blockchains found matching {searchQuery}
             </div>
           )}
         </main>
