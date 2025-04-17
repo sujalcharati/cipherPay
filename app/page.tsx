@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { CuboidIcon as Cube, Search, Sun, Moon } from "lucide-react"
-import Wallet from "@/components/wallet"
+import Wallet from "@/components/Wallet"
 
 export default function Home() {
   const [selectedBlockchain, setSelectedBlockchain] = useState<string | null>(null)
